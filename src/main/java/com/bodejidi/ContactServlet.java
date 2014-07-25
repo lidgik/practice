@@ -12,6 +12,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.ResultSet;
 
+import java.util.List;
+import java.util.ArrayList;
+
 public class ContactServlet extends HttpServlet {
 	public void doGet(HttpServletRequest request, HttpServletResponse response) 
 		throws IOException, ServletException {
@@ -22,6 +25,7 @@ public class ContactServlet extends HttpServlet {
 
 		if((request.getParameter("id") == null) || (request.getParameter("id") == "")) {
 			response.getWriter().println("ContactList");
+			List<Contact> contacts = new ArrayList();
 
 			try {
 				Class.forName("com.mysql.jdbc.Driver").newInstance();
@@ -44,14 +48,7 @@ public class ContactServlet extends HttpServlet {
 					contact.setHomeAddress(resultSet.getString("home_address"));
 					contact.setOfficeAddress(resultSet.getString("office_address"));
 
-					response.getWriter().println("Following is the information of:" + contact.getName());
-					response.getWriter().println("Name:" + contact.getName());
-					response.getWriter().println("Mobile:" + contact.getMobile());
-					response.getWriter().println("Vpmn:" + contact.getVpmn());
-					response.getWriter().println("Email:" + contact.getEmail());
-					response.getWriter().println("HomeAddress:" + contact.getHomeAddress());
-					response.getWriter().println("OfficeAddress:" + contact.getOfficeAddress());
-					response.getWriter().println();
+					contacts.add(contact);
 				}
 			} catch (SQLException sqle) {
 				response.getWriter().println("cannot connect to db");
@@ -80,6 +77,17 @@ public class ContactServlet extends HttpServlet {
 				} catch (Exception e) {
 
 				}
+			}
+
+			for(Contact contact: contacts) {
+				response.getWriter().println("Following is the information of:" + contact.getName());
+				response.getWriter().println("Name:" + contact.getName());
+				response.getWriter().println("Mobile:" + contact.getMobile());
+				response.getWriter().println("Vpmn:" + contact.getVpmn());
+				response.getWriter().println("Email:" + contact.getEmail());
+				response.getWriter().println("HomeAddress:" + contact.getHomeAddress());
+				response.getWriter().println("OfficeAddress:" + contact.getOfficeAddress());
+				response.getWriter().println();
 			}
 		}
 		else {
