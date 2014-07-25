@@ -31,10 +31,10 @@ public class ContactServlet extends HttpServlet {
 		try {
 			connection = DriverManager.getConnection("jdbc:mysql://localhost/test?user=root&password=");
 			statement = connection.createStatement();
-			resultSet = statement.executeQuery("select * from contact where id=1");
+			resultSet = statement.executeQuery("select * from contact where id=" + request.getParameter("id"));
 
 			resultSet.next();
-			response.getWriter().println("the name of No.1 is " + resultSet.getString("name"));
+			response.getWriter().println("the name of No." + request.getParameter("id") +" is " + resultSet.getString("name"));
 		} catch (SQLException sqle) {
 			response.getWriter().println("cannot connect to db");
 			sqle.printStackTrace();
