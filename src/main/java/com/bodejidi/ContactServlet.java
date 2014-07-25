@@ -35,14 +35,33 @@ public class ContactServlet extends HttpServlet {
 
 			resultSet.next();
 			response.getWriter().println("the name of No.1 is " + resultSet.getString("name"));
-
-			resultSet.close();
-			statement.close();
-			connection.close();
 		} catch (SQLException sqle) {
 			response.getWriter().println("cannot connect to db");
 			sqle.printStackTrace();
 		}
+
+		if(resultSet != null) {
+			try {
+				resultSet.close();
+			} catch (Exception e) {
+
+			}
+		}
+
+		if(statement != null) {
+			try {
+				statement.close();
+			} catch (Exception e) {
+
+			}
+		}
 		
+		if(connection != null) {
+			try {
+				connection.close();
+			} catch (Exception e) {
+
+			}
+		}
 	}
 }
