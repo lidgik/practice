@@ -20,13 +20,6 @@ public class ContactServlet extends HttpServlet {
 		Statement statement = null;
 		ResultSet resultSet = null;
 
-		String name = null;
-		String mobile = null;
-		String vpmn = null;
-		String email = null;
-		String homeAddress = null;
-		String officeAddress = null;
-
 		if((request.getParameter("id") == null) || (request.getParameter("id") == "")) {
 			response.getWriter().println("ContactList");
 
@@ -42,20 +35,22 @@ public class ContactServlet extends HttpServlet {
 				resultSet = statement.executeQuery("select * from contact");
 
 				while(resultSet.next()) {
-					name = resultSet.getString("name");
-					mobile = resultSet.getString("mobile");
-					vpmn = resultSet.getString("vpmn");
-					email = resultSet.getString("email");
-					homeAddress = resultSet.getString("home_address");
-					officeAddress = resultSet.getString("office_address");
+					Contact contact = new Contact();
 
-					response.getWriter().println("Following is the information of:" + name);
-					response.getWriter().println("Name:" + name);
-					response.getWriter().println("Mobile:" + mobile);
-					response.getWriter().println("Vpmn:" + vpmn);
-					response.getWriter().println("Email:" + email);
-					response.getWriter().println("HomeAddress:" + homeAddress);
-					response.getWriter().println("OfficeAddress:" + officeAddress);
+					contact.setName(resultSet.getString("name"));
+					contact.setMobile(resultSet.getString("mobile"));
+					contact.setVpmn(resultSet.getString("vpmn"));
+					contact.setEmail(resultSet.getString("email"));
+					contact.setHomeAddress(resultSet.getString("home_address"));
+					contact.setOfficeAddress(resultSet.getString("office_address"));
+
+					response.getWriter().println("Following is the information of:" + contact.getName());
+					response.getWriter().println("Name:" + contact.getName());
+					response.getWriter().println("Mobile:" + contact.getMobile());
+					response.getWriter().println("Vpmn:" + contact.getVpmn());
+					response.getWriter().println("Email:" + contact.getEmail());
+					response.getWriter().println("HomeAddress:" + contact.getHomeAddress());
+					response.getWriter().println("OfficeAddress:" + contact.getOfficeAddress());
 					response.getWriter().println();
 				}
 			} catch (SQLException sqle) {
@@ -89,6 +84,7 @@ public class ContactServlet extends HttpServlet {
 		}
 		else {
 			response.getWriter().println("ContactShowById");
+			Contact contact = new Contact();
 
 			try {
 				Class.forName("com.mysql.jdbc.Driver").newInstance();
@@ -102,12 +98,12 @@ public class ContactServlet extends HttpServlet {
 				resultSet = statement.executeQuery("select * from contact where id=" + request.getParameter("id"));
 
 				if(resultSet.next()) {
-					name = resultSet.getString("name");
-					mobile = resultSet.getString("mobile");
-					vpmn = resultSet.getString("vpmn");
-					email = resultSet.getString("email");
-					homeAddress = resultSet.getString("home_address");
-					officeAddress = resultSet.getString("office_address");
+					contact.setName(resultSet.getString("name"));
+					contact.setMobile(resultSet.getString("mobile"));
+					contact.setVpmn(resultSet.getString("vpmn"));
+					contact.setEmail(resultSet.getString("email"));
+					contact.setHomeAddress(resultSet.getString("home_address"));
+					contact.setOfficeAddress(resultSet.getString("office_address"));
 				}
 				else {
 					response.getWriter().println("cannot find this contact");
@@ -140,14 +136,14 @@ public class ContactServlet extends HttpServlet {
 
 				}
 			}
-
-			response.getWriter().println("The No." + request.getParameter("id") +" is " + name);
-			response.getWriter().println("Name:" + name);
-			response.getWriter().println("Mobile:" + mobile);
-			response.getWriter().println("Vpmn:" + vpmn);
-			response.getWriter().println("Email:" + email);
-			response.getWriter().println("HomeAddress:" + homeAddress);
-			response.getWriter().println("OfficeAddress:" + officeAddress);
+			
+			response.getWriter().println("The No." + request.getParameter("id") +" is " + contact.getName());
+			response.getWriter().println("Name:" + contact.getName());
+			response.getWriter().println("Mobile:" + contact.getMobile());
+			response.getWriter().println("Vpmn:" + contact.getVpmn());
+			response.getWriter().println("Email:" + contact.getEmail());
+			response.getWriter().println("HomeAddress:" + contact.getHomeAddress());
+			response.getWriter().println("OfficeAddress:" + contact.getOfficeAddress());
 		}
 	}
 }
