@@ -145,12 +145,16 @@ public class ContactServlet extends HttpServlet {
 
 				}
 			}
-			
-			request.setAttribute("contact", contact);
 
-			getServletContext()
-				.getRequestDispatcher("/WEB-INF/jsp/contact/show.jsp")
-				.forward(request, response);
+			if(contact.getId() == null) {
+				response.getWriter().println("cannot find this contact");
+			} else {
+				request.setAttribute("contact", contact);
+
+				getServletContext()
+					.getRequestDispatcher("/WEB-INF/jsp/contact/show.jsp")
+					.forward(request, response);
+			}
 		}
 	}
 }
