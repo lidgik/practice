@@ -49,7 +49,6 @@ public class ContactServlet extends HttpServlet {
 					homeAddress = resultSet.getString("home_address");
 					officeAddress = resultSet.getString("office_address");
 
-
 					response.getWriter().println("Following is the information of:" + name);
 					response.getWriter().println("Name:" + name);
 					response.getWriter().println("Mobile:" + mobile);
@@ -109,16 +108,6 @@ public class ContactServlet extends HttpServlet {
 					email = resultSet.getString("email");
 					homeAddress = resultSet.getString("home_address");
 					officeAddress = resultSet.getString("office_address");
-
-
-					response.getWriter().println("The No." + request.getParameter("id") +" is " + resultSet.getString("name"));
-					response.getWriter().println("Name:" + name);
-					response.getWriter().println("Mobile:" + mobile);
-					response.getWriter().println("Vpmn:" + vpmn);
-					response.getWriter().println("Email:" + email);
-					response.getWriter().println("HomeAddress:" + homeAddress);
-					response.getWriter().println("OfficeAddress:" + officeAddress);
-
 				}
 				else {
 					response.getWriter().println("cannot find this contact");
@@ -151,6 +140,15 @@ public class ContactServlet extends HttpServlet {
 
 				}
 			}
+
+			response.getWriter().println("The No." + request.getParameter("id") +" is " + name);
+			response.getWriter().println("Name:" + name);
+			response.getWriter().println("Mobile:" + mobile);
+			response.getWriter().println("Vpmn:" + vpmn);
+			response.getWriter().println("Email:" + email);
+			response.getWriter().println("HomeAddress:" + homeAddress);
+			response.getWriter().println("OfficeAddress:" + officeAddress);
 		}
 	}
 }
+
