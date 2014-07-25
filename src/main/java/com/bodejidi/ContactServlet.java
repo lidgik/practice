@@ -113,6 +113,9 @@ public class ContactServlet extends HttpServlet {
 					contact.setEmail(resultSet.getString("email"));
 					contact.setHomeAddress(resultSet.getString("home_address"));
 					contact.setOfficeAddress(resultSet.getString("office_address"));
+					contact.setMemo(resultSet.getString("memo"));
+					contact.setJob(resultSet.getString("job"));
+					contact.setJobLevel(resultSet.getLong("job_level"));
 				}
 			} catch (SQLException sqle) {
 				response.getWriter().println("cannot connect to db");
@@ -143,17 +146,11 @@ public class ContactServlet extends HttpServlet {
 				}
 			}
 			
-			if(contact.getId() == null) {
-				response.getWriter().println("cannot find this contact");
-			} else {
-				response.getWriter().println("The No." + request.getParameter("id") +" is " + contact.getName());
-				response.getWriter().println("Name:" + contact.getName());
-				response.getWriter().println("Mobile:" + contact.getMobile());
-				response.getWriter().println("Vpmn:" + contact.getVpmn());
-				response.getWriter().println("Email:" + contact.getEmail());
-				response.getWriter().println("HomeAddress:" + contact.getHomeAddress());
-				response.getWriter().println("OfficeAddress:" + contact.getOfficeAddress());
-			}
+			request.setAttribute("contact", contact);
+
+			getServletContext()
+				.getRequestDispatcher("/WEB-INF/jsp/contact/show.jsp")
+				.forward(request, response);
 		}
 	}
 }
