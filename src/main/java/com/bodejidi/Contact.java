@@ -12,6 +12,10 @@ public class Contact {
 	String job;
 	Long jobLevel;
 
+	public String toString() {
+		return name;
+	}
+
 	public void setId(Long id) {
 		this.id = id;
 	}
