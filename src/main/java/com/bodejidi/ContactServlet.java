@@ -19,58 +19,63 @@ public class ContactServlet extends HttpServlet {
 		Connection connection = null;
 		Statement statement = null;
 		ResultSet resultSet = null;
-		
-		response.getWriter().println("Contact");
 
-		try {
-			Class.forName("com.mysql.jdbc.Driver").newInstance();
-		} catch (Exception e) {
-			// handle the error
+		if((request.getParameter("id") == null) || (request.getParameter("id") == "")) {
+			response.getWriter().println("ContactList");
 		}
+		else {
+			response.getWriter().println("ContactShowById");
 
-		try {
-			connection = DriverManager.getConnection("jdbc:mysql://localhost/test?user=root&password=");
-			statement = connection.createStatement();
-			resultSet = statement.executeQuery("select * from contact where id=" + request.getParameter("id"));
-
-			if(resultSet.next()) {
-				response.getWriter().println("the name of No." + request.getParameter("id") +" is " + resultSet.getString("name"));
-				response.getWriter().println("Name:" + resultSet.getString("name"));
-				response.getWriter().println("Mobile:" + resultSet.getString("mobile"));
-				response.getWriter().println("Vpmn:" + resultSet.getString("vpmn"));
-				response.getWriter().println("Email:" + resultSet.getString("email"));
-				response.getWriter().println("HomeAddress:" + resultSet.getString("home_address"));
-				response.getWriter().println("OfficeAddress:" + resultSet.getString("office_address"));
-			}
-			else {
-				response.getWriter().println("cannot find this contact");
-			}
-		} catch (SQLException sqle) {
-			response.getWriter().println("cannot connect to db");
-			sqle.printStackTrace();
-		}
-
-		if(resultSet != null) {
 			try {
-				resultSet.close();
+				Class.forName("com.mysql.jdbc.Driver").newInstance();
 			} catch (Exception e) {
-
+				// handle the error
 			}
-		}
 
-		if(statement != null) {
 			try {
-				statement.close();
-			} catch (Exception e) {
+				connection = DriverManager.getConnection("jdbc:mysql://localhost/test?user=root&password=");
+				statement = connection.createStatement();
+				resultSet = statement.executeQuery("select * from contact where id=" + request.getParameter("id"));
 
+				if(resultSet.next()) {
+					response.getWriter().println("the name of No." + request.getParameter("id") +" is " + resultSet.getString("name"));
+					response.getWriter().println("Name:" + resultSet.getString("name"));
+					response.getWriter().println("Mobile:" + resultSet.getString("mobile"));
+					response.getWriter().println("Vpmn:" + resultSet.getString("vpmn"));
+					response.getWriter().println("Email:" + resultSet.getString("email"));
+					response.getWriter().println("HomeAddress:" + resultSet.getString("home_address"));
+					response.getWriter().println("OfficeAddress:" + resultSet.getString("office_address"));
+				}
+				else {
+					response.getWriter().println("cannot find this contact");
+				}
+			} catch (SQLException sqle) {
+				response.getWriter().println("cannot connect to db");
+				sqle.printStackTrace();
 			}
-		}
-		
-		if(connection != null) {
-			try {
-				connection.close();
-			} catch (Exception e) {
 
+			if(resultSet != null) {
+				try {
+					resultSet.close();
+				} catch (Exception e) {
+
+				}
+			}
+
+			if(statement != null) {
+				try {
+					statement.close();
+				} catch (Exception e) {
+
+				}
+			}
+			
+			if(connection != null) {
+				try {
+					connection.close();
+				} catch (Exception e) {
+
+				}
 			}
 		}
 	}
