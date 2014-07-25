@@ -33,8 +33,15 @@ public class ContactServlet extends HttpServlet {
 			statement = connection.createStatement();
 			resultSet = statement.executeQuery("select * from contact where id=" + request.getParameter("id"));
 
-			if(resultSet.next())
+			if(resultSet.next()) {
 				response.getWriter().println("the name of No." + request.getParameter("id") +" is " + resultSet.getString("name"));
+				response.getWriter().println("Name:" + resultSet.getString("name"));
+				response.getWriter().println("Mobile:" + resultSet.getString("mobile"));
+				response.getWriter().println("Vpmn:" + resultSet.getString("vpmn"));
+				response.getWriter().println("Email:" + resultSet.getString("email"));
+				response.getWriter().println("HomeAddress:" + resultSet.getString("home_address"));
+				response.getWriter().println("OfficeAddress:" + resultSet.getString("office_address"));
+			}
 			else {
 				response.getWriter().println("cannot find this contact");
 			}
