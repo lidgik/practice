@@ -98,15 +98,13 @@ public class ContactServlet extends HttpServlet {
 				resultSet = statement.executeQuery("select * from contact where id=" + request.getParameter("id"));
 
 				if(resultSet.next()) {
+					contact.setId(resultSet.getLong("id"));
 					contact.setName(resultSet.getString("name"));
 					contact.setMobile(resultSet.getString("mobile"));
 					contact.setVpmn(resultSet.getString("vpmn"));
 					contact.setEmail(resultSet.getString("email"));
 					contact.setHomeAddress(resultSet.getString("home_address"));
 					contact.setOfficeAddress(resultSet.getString("office_address"));
-				}
-				else {
-					response.getWriter().println("cannot find this contact");
 				}
 			} catch (SQLException sqle) {
 				response.getWriter().println("cannot connect to db");
@@ -137,13 +135,17 @@ public class ContactServlet extends HttpServlet {
 				}
 			}
 			
-			response.getWriter().println("The No." + request.getParameter("id") +" is " + contact.getName());
-			response.getWriter().println("Name:" + contact.getName());
-			response.getWriter().println("Mobile:" + contact.getMobile());
-			response.getWriter().println("Vpmn:" + contact.getVpmn());
-			response.getWriter().println("Email:" + contact.getEmail());
-			response.getWriter().println("HomeAddress:" + contact.getHomeAddress());
-			response.getWriter().println("OfficeAddress:" + contact.getOfficeAddress());
+			if(contact.getId() == null) {
+				response.getWriter().println("cannot find this contact");
+			} else {
+				response.getWriter().println("The No." + request.getParameter("id") +" is " + contact.getName());
+				response.getWriter().println("Name:" + contact.getName());
+				response.getWriter().println("Mobile:" + contact.getMobile());
+				response.getWriter().println("Vpmn:" + contact.getVpmn());
+				response.getWriter().println("Email:" + contact.getEmail());
+				response.getWriter().println("HomeAddress:" + contact.getHomeAddress());
+				response.getWriter().println("OfficeAddress:" + contact.getOfficeAddress());
+			}
 		}
 	}
 }
