@@ -20,6 +20,13 @@ public class ContactServlet extends HttpServlet {
 		Statement statement = null;
 		ResultSet resultSet = null;
 
+		String name = null;
+		String mobile = null;
+		String vpmn = null;
+		String email = null;
+		String homeAddress = null;
+		String officeAddress = null;
+
 		if((request.getParameter("id") == null) || (request.getParameter("id") == "")) {
 			response.getWriter().println("ContactList");
 
@@ -35,13 +42,21 @@ public class ContactServlet extends HttpServlet {
 				resultSet = statement.executeQuery("select * from contact");
 
 				while(resultSet.next()) {
-					response.getWriter().println("Following is the information of:" + resultSet.getString("name"));
-					response.getWriter().println("Name:" + resultSet.getString("name"));
-					response.getWriter().println("Mobile:" + resultSet.getString("mobile"));
-					response.getWriter().println("Vpmn:" + resultSet.getString("vpmn"));
-					response.getWriter().println("Email:" + resultSet.getString("email"));
-					response.getWriter().println("HomeAddress:" + resultSet.getString("home_address"));
-					response.getWriter().println("OfficeAddress:" + resultSet.getString("office_address"));
+					name = resultSet.getString("name");
+					mobile = resultSet.getString("mobile");
+					vpmn = resultSet.getString("vpmn");
+					email = resultSet.getString("email");
+					homeAddress = resultSet.getString("home_address");
+					officeAddress = resultSet.getString("office_address");
+
+
+					response.getWriter().println("Following is the information of:" + name);
+					response.getWriter().println("Name:" + name);
+					response.getWriter().println("Mobile:" + mobile);
+					response.getWriter().println("Vpmn:" + vpmn);
+					response.getWriter().println("Email:" + email);
+					response.getWriter().println("HomeAddress:" + homeAddress);
+					response.getWriter().println("OfficeAddress:" + officeAddress);
 					response.getWriter().println();
 				}
 			} catch (SQLException sqle) {
@@ -88,13 +103,22 @@ public class ContactServlet extends HttpServlet {
 				resultSet = statement.executeQuery("select * from contact where id=" + request.getParameter("id"));
 
 				if(resultSet.next()) {
-					response.getWriter().println("the name of No." + request.getParameter("id") +" is " + resultSet.getString("name"));
-					response.getWriter().println("Name:" + resultSet.getString("name"));
-					response.getWriter().println("Mobile:" + resultSet.getString("mobile"));
-					response.getWriter().println("Vpmn:" + resultSet.getString("vpmn"));
-					response.getWriter().println("Email:" + resultSet.getString("email"));
-					response.getWriter().println("HomeAddress:" + resultSet.getString("home_address"));
-					response.getWriter().println("OfficeAddress:" + resultSet.getString("office_address"));
+					name = resultSet.getString("name");
+					mobile = resultSet.getString("mobile");
+					vpmn = resultSet.getString("vpmn");
+					email = resultSet.getString("email");
+					homeAddress = resultSet.getString("home_address");
+					officeAddress = resultSet.getString("office_address");
+
+
+					response.getWriter().println("The No." + request.getParameter("id") +" is " + resultSet.getString("name"));
+					response.getWriter().println("Name:" + name);
+					response.getWriter().println("Mobile:" + mobile);
+					response.getWriter().println("Vpmn:" + vpmn);
+					response.getWriter().println("Email:" + email);
+					response.getWriter().println("HomeAddress:" + homeAddress);
+					response.getWriter().println("OfficeAddress:" + officeAddress);
+
 				}
 				else {
 					response.getWriter().println("cannot find this contact");
