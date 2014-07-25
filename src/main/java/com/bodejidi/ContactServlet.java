@@ -33,8 +33,11 @@ public class ContactServlet extends HttpServlet {
 			statement = connection.createStatement();
 			resultSet = statement.executeQuery("select * from contact where id=" + request.getParameter("id"));
 
-			resultSet.next();
-			response.getWriter().println("the name of No." + request.getParameter("id") +" is " + resultSet.getString("name"));
+			if(resultSet.next())
+				response.getWriter().println("the name of No." + request.getParameter("id") +" is " + resultSet.getString("name"));
+			else {
+				response.getWriter().println("cannot find this contact");
+			}
 		} catch (SQLException sqle) {
 			response.getWriter().println("cannot connect to db");
 			sqle.printStackTrace();
