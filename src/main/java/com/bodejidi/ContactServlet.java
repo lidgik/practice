@@ -44,9 +44,6 @@ public class ContactServlet extends HttpServlet {
 					contact.setName(resultSet.getString("name"));
 					contact.setMobile(resultSet.getString("mobile"));
 					contact.setVpmn(resultSet.getString("vpmn"));
-					contact.setEmail(resultSet.getString("email"));
-					contact.setHomeAddress(resultSet.getString("home_address"));
-					contact.setOfficeAddress(resultSet.getString("office_address"));
 
 					contacts.add(contact);
 				}
@@ -78,7 +75,13 @@ public class ContactServlet extends HttpServlet {
 
 				}
 			}
+			
+			request.setAttribute("contactList", contacts);
 
+			getServletContext()
+				.getRequestDispatcher("/WEB-INF/jsp/contact/list.jsp")
+				.forward(request, response);
+/*
 			for(Contact contact: contacts) {
 				response.getWriter().println("Following is the information of:" + contact.getName());
 				response.getWriter().println("Name:" + contact.getName());
@@ -89,6 +92,7 @@ public class ContactServlet extends HttpServlet {
 				response.getWriter().println("OfficeAddress:" + contact.getOfficeAddress());
 				response.getWriter().println();
 			}
+*/
 		}
 		else {
 			response.getWriter().println("ContactShowById");
